@@ -1,0 +1,25 @@
+{
+  "name": "@flsk/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx --env-file .env.development --watch ./src/server.ts",
+    "build": "tsdown",
+    "start": "node ./dist/server.js"
+  },
+  "dependencies": {
+    "@flsk/database": "workspace:*",
+    "@hono/node-server": "^1.19.6",
+    "@hono/zod-openapi": "^1.1.5",
+    "better-auth": "^1.4.7",
+    "drizzle-orm": "^0.45.1",
+    "drizzle-zod": "^0.8.3",
+    "hono": "^4.10.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "tsdown": "0.20.0-beta.4",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

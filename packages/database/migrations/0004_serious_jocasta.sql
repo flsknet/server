@@ -1,0 +1,1 @@
+ALTER TABLE "shift" ALTER COLUMN "assigned_to" SET NOT NULL;
