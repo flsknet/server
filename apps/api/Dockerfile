@@ -4,13 +4,13 @@ RUN corepack enable
 
 WORKDIR /app
 
-FROM base as prepare
+FROM base AS prepare
 
 COPY . .
 
 RUN pnpm dlx turbo prune @flsk/api --docker
 
-FROM base as builder
+FROM base AS builder
 
 COPY --from=prepare /app/out/json .
 
@@ -20,7 +20,7 @@ COPY --from=prepare /app/out/full .
 
 RUN pnpm turbo build
 
-FROM base as runner
+FROM base AS runner
 
 COPY --from=prepare /app/out/json .
 
