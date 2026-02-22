@@ -27,4 +27,4 @@ jobs:
           context: .
           file: ./apps/api/Dockerfile
           push: true
-          tags: ghcr.io/flsknet/server:$(date +%s)
+          tags: ghcr.io/flsknet/server:latest
