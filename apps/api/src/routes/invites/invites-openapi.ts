@@ -39,6 +39,9 @@ export const acceptOrganizationInviteRoute = createRoute({
   responses: {
     200: {
       description: "",
+      content: {
+        "application/json": { schema: zOrganizationInvitePreview },
+      },
     },
   },
 });

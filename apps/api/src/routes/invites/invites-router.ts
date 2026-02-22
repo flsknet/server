@@ -71,7 +71,15 @@ router.openapi(acceptOrganizationInviteRoute, async (c) => {
     );
   }
 
-  return c.body(null, 200);
+  const organization = await getOrganization(
+    db,
+    organizationInvite.organizationId
+  );
+
+  return c.json(
+    zOrganizationInvitePreview.parse({ ...organizationInvite, organization }),
+    200
+  );
 });
 
 export { router as invitesRouter };
