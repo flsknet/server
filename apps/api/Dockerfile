@@ -4,22 +4,32 @@ RUN corepack enable
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
-
-FROM base AS builder
-
-RUN pnpm i --frozen-lockfile
+FROM base as prepare
 
 COPY . .
 
-RUN pnpm build
+RUN pnpm dlx turbo prune @flsk/api --docker
 
-FROM base AS runner
+FROM base as builder
 
-RUN pnpm i --prod --frozen-lockfile 
+COPY --from=prepare /app/out/json .
 
-COPY --from=builder /app/dist ./dist
+RUN pnpm install --frozen-lockfile 
+
+COPY --from=prepare /app/out/full .
+
+RUN pnpm turbo build
+
+FROM base as runner
+
+COPY --from=prepare /app/out/json .
+
+RUN pnpm install --prod --frozen-lockfile
+
+COPY --from=builder /app/apps/api/dist ./apps/api/dist
+COPY --from=builder /app/packages/database/dist ./packages/database/dist
+COPY --from=builder /app/packages/database/migrations ./packages/database/migrations
 
 EXPOSE 3000
 
-CMD ["pnpm", "start"]
+CMD ["pnpm", "--filter", "@flsk/api", "start"]

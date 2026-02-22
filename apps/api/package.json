@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx --env-file .env.development --watch ./src/server.ts",
+    "dev": "tsx --env-file .env.example --watch ./src/server.ts",
     "build": "tsdown",
-    "start": "node ./dist/server.js"
+    "start": "node ./dist/server.mjs"
   },
   "dependencies": {
     "@flsk/database": "workspace:*",
