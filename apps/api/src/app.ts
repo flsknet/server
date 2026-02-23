@@ -2,7 +2,7 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { cors } from "hono/cors";
 
 import { auth } from "~/lib/auth.js";
-import { env } from "~/lib/env.js";
+import { env } from "~/lib/env";
 import { withAuth } from "~/middleware/with-auth";
 
 import { invitesRouter } from "~/routes/invites/invites-router";
@@ -13,7 +13,15 @@ const app = new OpenAPIHono();
 
 app.use(
   cors({
-    origin: env.NODE_ENV == "production" ? env.CORS_ORIGIN : (origin) => origin,
+    origin: (origin) => {
+      const url = new URL(origin);
+
+      if (url.hostname == "localhost") {
+        return origin;
+      }
+
+      return env.CORS_ORIGIN;
+    },
     credentials: true,
   })
 );
