@@ -1,10 +1,10 @@
-name: Docker Build API
+name: Deploy
 
 on:
   workflow_dispatch:
 
 jobs:
-  build:
+  deploy_api:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -29,4 +29,4 @@ jobs:
           context: .
           file: ./apps/api/Dockerfile
           push: true
-          tags: ghcr.io/flsknet/server:latest
+          tags: ghcr.io/flsknet/api:latest
